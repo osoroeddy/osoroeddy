@@ -15,6 +15,11 @@ defmodule Hangman do
 
    def tally(game) do
    game = %Hangman{}
+   game.game_state
+   game.letters
+   game.used
+   game.turns_left
+   game.last_guess
 
   end
 
@@ -26,7 +31,7 @@ defmodule Hangman do
 
     word_to_guess =  Dictionary.random_word()
 
-  list4 = String.contains? word_to_guess, guess
+  contain_guess_letter = String.contains? word_to_guess, guess
 
    append = fn list, item ->
    list = Enum.reverse(list)
@@ -34,7 +39,7 @@ defmodule Hangman do
    Enum.reverse(list)
    end
 
-    if list4  and game.turns_left > 0 do
+    if contain_guess_letter  and game.turns_left > 0 do
 
     letter_elem = append.(game.letters, guess)
 
@@ -59,15 +64,15 @@ defmodule Hangman do
    new_map = %{game | turns_left: turns}
 
 
-   lett = game.letters
-   lett2 = String.graphemes word_to_guess
+   game_letters = game.letters
+   guess_word = String.graphemes word_to_guess
 
-   lista =length lett
-   listb = length lett2
+   letters_list =length game_letters
+   guess_word_lenght = length guess_word
 
   list3 =  String.graphemes  word_to_guess
 
-  if list3 === lett and lista === listb and game.turns_left == 0 do
+  if list3 === game_letters and letters_list === guess_word_lenght and game.turns_left == 0 do
 
   new_map = %{game | game_state: "won"}
 
